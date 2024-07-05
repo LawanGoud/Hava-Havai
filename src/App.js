@@ -1,24 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Header from "./components/Header";
+import NavSection from "./components/NavSection";
+import Services from "./components/Services";
+import Home from "./components/Home";
+import Dashboard from "./components/Dashboard";
+import AirportDetail from "./components/AiportDetail";
+import {
+  View,
+  Flex,
+  Provider,
+  defaultTheme,
+  Divider,
+} from "@adobe/react-spectrum";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider theme={defaultTheme}>
+      <Router>
+        <Flex direction="column" height="100vh">
+          <Header />
+          <Flex direction="row" flex>
+            <NavSection />
+            <Divider orientation="vertical" size="S" />
+            <View flex padding="size-200">
+              <Routes>
+                <Route path="/home" element={<Home />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/services/airports" element={<Services />} />
+                <Route
+                  path="/services/airports/:airportName"
+                  element={<AirportDetail />}
+                />
+                <Route path="/" element={<Home />} />
+              </Routes>
+            </View>
+          </Flex>
+        </Flex>
+      </Router>
+    </Provider>
   );
 }
 
